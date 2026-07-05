@@ -5,6 +5,21 @@
 #include <climits>
 #include <cmath>
 
+ScalarConverter::ScalarConverter() {}
+
+ScalarConverter::ScalarConverter(const ScalarConverter &src)
+{
+    *this = src;
+}
+
+ScalarConverter &ScalarConverter::operator=(const ScalarConverter &src)
+{
+    (void)src;
+    return *this;
+}
+
+ScalarConverter::~ScalarConverter() {}
+
 
 static bool isChar(const std::string &s)
 {
