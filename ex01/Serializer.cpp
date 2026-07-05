@@ -1,6 +1,5 @@
 #include "Serializer.hpp"
 
-// constructor private (ما يتصايبش object)
 Serializer::Serializer() {}
 
 uintptr_t Serializer::serialize(Data* ptr)

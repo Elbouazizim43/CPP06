@@ -5,17 +5,12 @@
 #include <climits>
 #include <cmath>
 
-// ─────────────────────────────────────────
-// STEP 1: detect what type is the literal
-// ─────────────────────────────────────────
 
-// wash hiya char? ex: 'a'
 static bool isChar(const std::string &s)
 {
     return (s.length() == 3 && s[0] == '\'' && s[2] == '\'');
 }
 
-// wash kol characters digits? (optionally starts with + or -)
 static bool isInt(const std::string &s)
 {
     size_t i = 0;
@@ -32,15 +27,12 @@ static bool isInt(const std::string &s)
     return true;
 }
 
-// wash katsa3da b 'f' w fiha dot? ex: 3.14f
 static bool isFloat(const std::string &s)
 {
     if (s == "nanf" || s == "+inff" || s == "-inff" || s == "inff")
         return true;
-    // lazm katsa3da b 'f'
     if (s[s.size() - 1] != 'f')
         return false;
-    // nchayko bla f — wash hiya double valid?
     std::string withoutF = s.substr(0, s.size() - 1);
     size_t i = 0;
     bool hasDot = false;
@@ -56,10 +48,9 @@ static bool isFloat(const std::string &s)
             return false;
         i++;
     }
-    return hasDot; // lazm kayn dot: 3f invalid, 3.0f valid
+    return hasDot; 
 }
 
-// wash fiha dot w bla 'f' f l-akhir? ex: 3.14
 static bool isDouble(const std::string &s)
 {
     if (s == "nan" || s == "+inf" || s == "-inf" || s == "inf")
@@ -81,19 +72,13 @@ static bool isDouble(const std::string &s)
     return hasDot;
 }
 
-// ─────────────────────────────────────────
-// STEP 2: print the 4 types from a double
-// ─────────────────────────────────────────
 
 static void printChar(double d)
 {
-    // nan/inf → impossible
     if (std::isnan(d) || std::isinf(d))
         std::cout << "char: impossible" << std::endl;
-    // ASCII range: 0 → 127
     else if (d < 0 || d > 127)
         std::cout << "char: impossible" << std::endl;
-    // printable = li kaydhr (space, a-z, 0-9, !, @...)
     else if (d < 32 || d == 127)
         std::cout << "char: Non displayable" << std::endl;
     else
@@ -112,7 +97,7 @@ static void printInt(double d)
 
 static void printFloat(double d)
 {
-    float f = static_cast<float>(d);
+     float f = static_cast<float>(d);
     if (std::isnan(f))
         std::cout << "float: nanf" << std::endl;
     else if (std::isinf(f))
@@ -133,32 +118,24 @@ static void printDouble(double d)
                   << "double: " << d << std::endl;
 }
 
-// ─────────────────────────────────────────
-// STEP 3: detect → convert → print
-// ─────────────────────────────────────────
-
 void ScalarConverter::convert(const std::string &literal)
 {
     double d = 0.0;
 
     if (isChar(literal))
     {
-        // 'a' → nakhdo l character f l-milieu (index 1)
         d = static_cast<double>(literal[1]);
     }
     else if (isInt(literal))
     {
-        // string → long → double
         d = static_cast<double>(std::atol(literal.c_str()));
     }
     else if (isFloat(literal))
     {
-        // string → float → double
         d = static_cast<double>(std::atof(literal.c_str()));
     }
     else if (isDouble(literal))
     {
-        // string → double direct
         d = std::atof(literal.c_str());
     }
     else

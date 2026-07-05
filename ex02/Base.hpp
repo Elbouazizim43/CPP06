@@ -4,10 +4,12 @@
 class Base
 {
 public:
+    Base();
+    Base(const Base &src);
+    Base &operator=(const Base &src);
     virtual ~Base();
 };
 
-// ===== Classes =====
 
 
 class A : public Base
@@ -36,12 +38,6 @@ public:
     C &operator=(const C &src);
     ~C();
 };
-
-// class A : public Base {};
-// class B : public Base {};
-// class C : public Base {};
-
-// ===== Prototypes =====
 
 Base* generate(void);
 

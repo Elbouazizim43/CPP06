@@ -15,7 +15,8 @@ int main()
     std::cout << "Raw value: " << raw << std::endl;
     std::cout << "New ptr: " << newPtr << std::endl;
 
-    std::cout << "Value: " << newPtr->x << std::endl;
+    // if (ptr == newPtr)
+        std::cout << "Value: " << newPtr->x << std::endl;
 
     return 0;
 }

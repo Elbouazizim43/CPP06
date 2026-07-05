@@ -2,27 +2,35 @@
 #include <cstdlib>
 #include "Base.hpp"
 
+Base::Base() {}
+Base::Base(const Base &src)
+{
+    *this = src;
+}
+
+Base &Base::operator=(const Base &src)
+{
+    (void)src;
+    return *this;
+}
+
 Base::~Base() {}
 
 
-// ── A ──
 A::A() {}
 A::A(const A &src) { *this = src; }
 A &A::operator=(const A &src) { (void)src; return *this; }
 A::~A() {}
 
-// ── B ──
 B::B() {}
 B::B(const B &src) { *this = src; }
 B &B::operator=(const B &src) { (void)src; return *this; }
 B::~B() {}
 
-// ── C ──
 C::C() {}
 C::C(const C &src) { *this = src; }
 C &C::operator=(const C &src) { (void)src; return *this; }
 C::~C() {}
-// generate
 Base* generate(void)
 {
     int r = rand() % 3;
@@ -34,7 +42,6 @@ Base* generate(void)
     return new C();
 }
 
-// identify pointer
 void identify(Base* p)
 {
     if (dynamic_cast<A*>(p))
@@ -45,7 +52,6 @@ void identify(Base* p)
         std::cout << "C\n";
 }
 
-// identify reference
 void identify(Base& p)
 {
     try {
