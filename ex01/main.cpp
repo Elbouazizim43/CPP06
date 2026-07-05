@@ -15,8 +15,12 @@ int main()
     std::cout << "Raw value: " << raw << std::endl;
     std::cout << "New ptr: " << newPtr << std::endl;
 
-    // if (ptr == newPtr)
-        std::cout << "Value: " << newPtr->x << std::endl;
 
+if (newPtr == NULL)
+{
+    std::cout << "NULL pointer" << std::endl;
+    return 1;
+}
+std::cout << newPtr->x << std::endl;
     return 0;
 }

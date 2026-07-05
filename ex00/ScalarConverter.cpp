@@ -155,7 +155,7 @@ void ScalarConverter::convert(const std::string &literal)
     }
     else
     {
-        std::cout << "Error: unrecognized literal" << std::endl;
+        std::cout << "Error:literal" << std::endl;
         return;
     }
 
