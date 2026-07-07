@@ -20,11 +20,11 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &src)
 
 ScalarConverter::~ScalarConverter() {}
 
-
-static bool isChar(const std::string &s)
+   static bool isChar(const std::string &s)
 {
-    return (s.length() == 3 && s[0] == '\'' && s[2] == '\'');
+    return (s.length() == 1 && !isdigit(s[0]));
 }
+
 
 static bool isInt(const std::string &s)
 {
@@ -51,6 +51,7 @@ static bool isFloat(const std::string &s)
     std::string withoutF = s.substr(0, s.size() - 1);
     size_t i = 0;
     bool hasDot = false;
+    bool hasDigit = false; // ← zedna
     if (withoutF[i] == '+' || withoutF[i] == '-')
         i++;
     if (i == withoutF.size())
@@ -59,11 +60,13 @@ static bool isFloat(const std::string &s)
     {
         if (withoutF[i] == '.' && !hasDot)
             hasDot = true;
-        else if (withoutF[i] < '0' || withoutF[i] > '9')
+        else if (withoutF[i] >= '0' && withoutF[i] <= '9')
+            hasDigit = true; // ← zedna
+        else
             return false;
         i++;
     }
-    return hasDot; 
+    return hasDot && hasDigit; // ← lazm les deux
 }
 
 static bool isDouble(const std::string &s)
@@ -72,6 +75,7 @@ static bool isDouble(const std::string &s)
         return true;
     size_t i = 0;
     bool hasDot = false;
+    bool hasDigit = false; // ← zedna
     if (s[i] == '+' || s[i] == '-')
         i++;
     if (i == s.size())
@@ -80,11 +84,13 @@ static bool isDouble(const std::string &s)
     {
         if (s[i] == '.' && !hasDot)
             hasDot = true;
-        else if (s[i] < '0' || s[i] > '9')
+        else if (s[i] >= '0' && s[i] <= '9')
+            hasDigit = true; // ← zedna
+        else
             return false;
         i++;
     }
-    return hasDot;
+    return hasDot && hasDigit; // ← lazm les deux
 }
 
 
@@ -139,7 +145,7 @@ void ScalarConverter::convert(const std::string &literal)
 
     if (isChar(literal))
     {
-        d = static_cast<double>(literal[1]);
+        d = static_cast<double>(literal[0]);
     }
     else if (isInt(literal))
     {
